@@ -9,15 +9,16 @@
 import { NestFactory } from '@nestjs/core';
 import {
   FastifyAdapter,
-  NestFastifyApplication,
+  NestFastifyApplication
 } from '@nestjs/platform-fastify';
 import { AppModule } from './app.module';
 
 async function bootstrap() {
   const app = await NestFactory.create<NestFastifyApplication>(
     AppModule,
-    new FastifyAdapter()
+    new FastifyAdapter(),
   );
-  await app.listen(3000);
+  // await app.listen(3000);
+  await app.listen(parseInt(process.env.PORT, '0.0.0.0') || 3000);
 }
 bootstrap();
