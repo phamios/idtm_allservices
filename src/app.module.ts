@@ -3,10 +3,24 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 // import { UsersController } from './users/users.controller';
 import { UsersModule } from './users/users.module';
+import { DataSource } from 'typeorm';
+import { TypeOrmModule } from '@nestjs/typeorm';
 
 @Module({
-  imports: [UsersModule],
+  imports: [
+    TypeOrmModule.forRoot({
+      type: 'mysql',
+      host: 'containers-us-west-95.railway.app',
+      port: 6404,
+      username: 'root',
+      password: 'P0iIFA8cc9hcG7GwOwtO',
+      database: 'railway',
+      entities: [],
+      synchronize: true,
+    }),  UsersModule ],
   controllers: [AppController],
   providers: [AppService],
 })
-export class AppModule {}
+export class AppModule {
+  // constructor(private dataSource: DataSource) {}
+}
