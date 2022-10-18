@@ -1,5 +1,8 @@
 import { NestFactory } from '@nestjs/core';
- 
+
+const port = process.env.PORT ?? 3000;
+const host = process.env.HOST || '0.0.0.0';
+
 import {
   FastifyAdapter,
   NestFastifyApplication,
@@ -12,6 +15,7 @@ async function bootstrap() {
     new FastifyAdapter(),
   );
   // await app.listen(3000);
-  await app.listen(process.env.PORT  ||  3000);
+  // await app.listen(process.env.PORT  ||  3000);
+  await app.listen(port, host);
 }
 bootstrap();
