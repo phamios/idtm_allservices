@@ -50,6 +50,7 @@ export class UsersService {
   async create(userData: CreateUserDto) {
     const passwordHash = await bcrypt.hashSync(userData.password.trim(),100);
     userData.password = passwordHash;
+    console.log(passwordHash);
     const newUser = await this.usersRepository.create(userData);
     await this.usersRepository.save(newUser);
     return newUser;
