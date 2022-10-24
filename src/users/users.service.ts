@@ -4,7 +4,8 @@ import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { User } from './entities/user.entity';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import {  Repository } from 'typeorm';
+import * as bcrypt from 'bcrypt';
 
 
 @Injectable()
@@ -13,11 +14,7 @@ export class UsersService {
     @InjectRepository(User)
     private usersRepository: Repository<User>,
   ) {}
-
-  // create(createUserDto: CreateUserDto) {
-  //   return 'This action adds a new user';
-  // }
-
+ 
   findAll(): Promise<User[]> {
     return this.usersRepository.find();
   }
@@ -51,9 +48,10 @@ export class UsersService {
 
   // eslint-disable-next-line @typescript-eslint/adjacent-overload-signatures
   async create(userData: CreateUserDto) {
+    const passwordHash = await bcrypt.hashSync(userData.password.trim(),100);
     const newUser = await this.usersRepository.create(userData);
+    newUser.password = passwordHash;
     await this.usersRepository.save(newUser);
     return newUser;
   }
- 
 }
