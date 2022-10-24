@@ -10,11 +10,11 @@ import { User } from './users/entities/user.entity';
   imports: [
     TypeOrmModule.forRoot({
       type: 'mysql',
-      host: 'containers-us-west-95.railway.app',
-      port: 6404,
-      username: 'root',
-      password: 'P0iIFA8cc9hcG7GwOwtO',
-      database: 'railway',
+      host: process.env.MYSQLHOST,
+      port: parseInt(process.env.MYSQLPORT) || 3306,
+      username: process.env.MYSQLUSER,
+      password: process.env.MYSQLPASSWORD,
+      database: process.env.MYSQLDATABASE,
       autoLoadEntities: true,
       // entities: [UsersEntity],
       synchronize: true,
