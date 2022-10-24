@@ -6,6 +6,8 @@ import { UsersModule } from './users/users.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { User } from './users/entities/user.entity';
 import { AuthenticationController } from './authentication/authentication.controller';
+import { AuthenticationModule } from './authentication/authentication.module';
+import { AuthService } from './auth/auth.service';
 
 @Module({
   imports: [
@@ -21,9 +23,10 @@ import { AuthenticationController } from './authentication/authentication.contro
       synchronize: true,
     }),
     UsersModule,
+    AuthenticationModule,
   ],
   controllers: [AppController, AuthenticationController],
-  providers: [AppService],
+  providers: [AppService, AuthService],
 })
 export class AppModule {
   // constructor(private dataSource: DataSource) {}
