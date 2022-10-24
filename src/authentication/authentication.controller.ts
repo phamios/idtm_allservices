@@ -8,8 +8,8 @@ class SignInDTO {
 
 @Controller('authentication')
 export class AuthenticationController {
-  @Post('/login')
-  Login(@Body() signinDTO: SignInDTO) {
+  @Post('/sign-in')
+  Signin(@Body() signinDTO: SignInDTO) {
     console.log('sign in data', signinDTO);
     return null;
   }
