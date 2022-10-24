@@ -48,10 +48,14 @@ export class UsersService {
 
   // eslint-disable-next-line @typescript-eslint/adjacent-overload-signatures
   async create(userData: CreateUserDto) {
-    const passwordHash = await bcrypt.hashSync(userData.password.trim(),100);
-    userData.password = passwordHash;
-    console.log(passwordHash);
+    // const passwordHash = await bcrypt.hashSync(userData.password.trim(),100);
+    const saltOrRounds = 10;
+    const password = userData.password;
+    const hash = await bcrypt.hash(password, saltOrRounds);
+    userData.password = hash;
+    console.log(hash);
     const newUser = await this.usersRepository.create(userData);
+    
     await this.usersRepository.save(newUser);
     return newUser;
   }
