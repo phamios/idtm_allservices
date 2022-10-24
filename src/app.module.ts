@@ -1,16 +1,17 @@
-import { UsersService } from './users/users.service';
 import { Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
-import { UsersController } from './users/users.controller';
 import { UsersModule } from './users/users.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { User } from './users/entities/user.entity';
-import { ConfigModule } from '@nestjs/config';
-
-@Module({
-  imports: [ConfigModule.forRoot()],
-})
+import * as dotenv from 'dotenv';
+dotenv.config();
+// @Module({
+//   imports: [
+//     ConfigModule.forRoot({
+//       load: [configuration],
+//     }),
+//   ],
+// })
 @Module({
   imports: [
     TypeOrmModule.forRoot({
@@ -24,6 +25,17 @@ import { ConfigModule } from '@nestjs/config';
       // entities: [User],
       synchronize: true,
     }),
+    // TypeOrmModule.forRoot({
+    //   type: 'mysql',
+    //   host: 'containers-us-west-95.railway.app',
+    //   port: 6404,
+    //   username: 'root',
+    //   password: 'P0iIFA8cc9hcG7GwOwtO',
+    //   database: 'railway',
+    //   autoLoadEntities: true,
+    //   // entities: [User],
+    //   synchronize: true,
+    // }),
     UsersModule,
   ],
   controllers: [AppController],
