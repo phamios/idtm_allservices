@@ -23,8 +23,19 @@ export class UsersService {
     return this.usersRepository.findOneBy({ id });
   }
 
-  update(id: number, updateUserDto: UpdateUserDto) {
-    return `This action updates a #${id} user`;
+  async update(id: number, updateUserDto: UpdateUserDto)  {
+    // eslint-disable-next-line prefer-const
+    let toUpdate = await this.usersRepository.findOneBy({ id });
+    delete toUpdate.password;
+    delete toUpdate.email;
+    const saltOrRounds = 10;
+    const password = updateUserDto.password;
+    const hash = await bcrypt.hash(password, saltOrRounds);
+    updateUserDto.password = hash; 
+    // eslint-disable-next-line prefer-const
+    let updated = Object.assign(toUpdate, updateUserDto);
+     await this.usersRepository.save(updated);
+     return 'update done';
   }
 
   remove(id: number) {
@@ -48,15 +59,12 @@ export class UsersService {
 
   // eslint-disable-next-line @typescript-eslint/adjacent-overload-signatures
   async create(userData: CreateUserDto) {
-    // const passwordHash = await bcrypt.hashSync(userData.password.trim(),100);
     const saltOrRounds = 10;
     const password = userData.password;
     const hash = await bcrypt.hash(password, saltOrRounds);
-    userData.password = hash;
-    console.log(hash);
-    const newUser = await this.usersRepository.create(userData);
-    
+    userData.password = hash; 
+    const newUser = await this.usersRepository.create(userData); 
     await this.usersRepository.save(newUser);
-    return newUser;
+    return "Created !";
   }
 }

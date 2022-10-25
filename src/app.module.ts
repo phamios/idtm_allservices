@@ -22,7 +22,6 @@ dotenv.config();
       password: process.env.MYSQLPASSWORD,
       database: process.env.MYSQLDATABASE,
       autoLoadEntities: true,
-      // entities: [User],
       synchronize: true,
     }),
     // TypeOrmModule.forRoot({
