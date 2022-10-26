@@ -23,6 +23,11 @@ export class UsersService {
     return this.usersRepository.findOneBy({ id });
   }
 
+  async delete(_username: string) {
+    return await this.usersRepository.delete({ username: _username});
+  }
+  
+
   async update(id: number, updateUserDto: UpdateUserDto)  {
     // eslint-disable-next-line prefer-const
     let toUpdate = await this.usersRepository.findOneBy({ id });
